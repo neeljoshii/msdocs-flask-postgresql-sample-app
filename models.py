@@ -4,7 +4,7 @@ from sqlalchemy.orm import validates
 from app import db
 
 
-class Product(db.Model):
+class Products(db.Model):
     __tablename__ = 'Products'
     id = Column(Integer, primary_key=True)
     name = Column(String(50))
