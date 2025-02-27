@@ -51,9 +51,10 @@ def index():
 #     return render_template('create_restaurant.html')
 
 @app.route('/product/new', methods=['GET', 'POST'])
+@csrf.exempt
 def new_product():
     if request.method == 'POST':
-        product = Product(
+        product = Products(
             name=request.form['name'],
             description=request.form['description'],
             price=float(request.form['price'])
@@ -64,8 +65,9 @@ def new_product():
     return render_template('new_product.html')
 
 @app.route('/product/<int:id>/edit', methods=['GET', 'POST'])
+@csrf.exempt
 def edit_product(id):
-    product = Product.query.get_or_404(id)
+    product = Products.query.get_or_404(id)
     if request.method == 'POST':
         product.name = request.form['name']
         product.description = request.form['description']
@@ -75,8 +77,9 @@ def edit_product(id):
     return render_template('edit_product.html', product=product)
 
 @app.route('/product/<int:id>/delete', methods=['POST'])
+@csrf.exempt
 def delete_product(id):
-    product = Product.query.get_or_404(id)
+    product = Products.query.get_or_404(id)
     db.session.delete(product)
     db.session.commit()
     return redirect(url_for('index'))
