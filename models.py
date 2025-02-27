@@ -9,6 +9,3 @@ class Products(db.Model):
     id = Column(Integer, primary_key=True)
     name = Column(String(50))
     price = Column(db.Float)
-
-    def __str__(self):
-        return self.name
