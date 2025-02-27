@@ -55,7 +55,7 @@ def create_restaurant():
 def add_restaurant():
     try:
         name = request.values.get('products_name')
-        street_address = request.values.get('price')
+        price = request.values.get('price')
 
     except (KeyError):
         # Redisplay the question voting form.
