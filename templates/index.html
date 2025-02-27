@@ -42,31 +42,13 @@
 {% endblock %}
 {% block content %}
       <h1>Restaurants</h1>
-
-      {% if True %}
-          <table class="table">
-              <thead>
-                  <tr>
-                      <th>Name</th>
-                      <th>Rating</th>
-                      <th class="text-end">Details</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  {% for restaurant in restaurants %}
-                      <tr>
-                          <td>{{ restaurant.name }}</td>
-                          <td>{% include "star_rating.html" %}</td>
-                          <td class="text-end"><a href="{{ url_for('details', id=restaurant.id) }}" class="btn btn-sm btn-primary">Details</a></td>
-                      </tr>
-                  {% endfor %}
-              </tbody>
-          </table>
-      {% else %}
-          <p>No restaurants exist.  Select Add new restaurant to add one.</p>
-      {% endif %}
-
-      <div class="d-flex justify-content-end">
-              <a href="{{ url_for('create_restaurant') }}" class="btn btn-success px-4 gap-3">Add new restaurant</a>
-      </div>
+      <form method="post">
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" required><br>
+          <label for="description">Description:</label>
+          <textarea id="description" name="description"></textarea><br>
+          <label for="price">Price:</label>
+          <input type="number" id="price" name="price" step="0.01" required><br>
+          <input type="submit" value="Add Product">
+    </form>
 {% endblock %}
