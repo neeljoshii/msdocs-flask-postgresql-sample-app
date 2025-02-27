@@ -40,41 +40,72 @@ def index():
     products = Products.query.all()
     return render_template('index.html', products=products)
 
-@app.route('/<int:id>', methods=['GET'])
-def details(id):
-    product = Products.query.where(Products.id == id).first()
-    return render_template('details.html', product=product)
+# @app.route('/<int:id>', methods=['GET'])
+# def details(id):
+#     product = Products.query.where(Products.id == id).first()
+#     return render_template('details.html', product=product)
 
-@app.route('/create', methods=['GET'])
-def create_restaurant():
-    print('Request for add restaurant page received')
-    return render_template('create_restaurant.html')
+# @app.route('/create', methods=['GET'])
+# def create_restaurant():
+#     print('Request for add restaurant page received')
+#     return render_template('create_restaurant.html')
 
-@app.route('/add', methods=['POST'])
-@csrf.exempt
-def add_restaurant():
-    try:
-        name = request.values.get('products_name')
-        price = request.values.get('price')
-
-    except (KeyError):
-        # Redisplay the question voting form.
-        return render_template('add_restaurant.html', {
-            'error_message': "You must include a restaurant name, address, and description",
-        })
-    else:
-        product = Products()
-        product.name = name
-        product.price = price
+@app.route('/product/new', methods=['GET', 'POST'])
+def new_product():
+    if request.method == 'POST':
+        product = Product(
+            name=request.form['name'],
+            description=request.form['description'],
+            price=float(request.form['price'])
+        )
         db.session.add(product)
         db.session.commit()
+        return redirect(url_for('index'))
+    return render_template('new_product.html')
 
-        return redirect(url_for('details', id=product.id))
+@app.route('/product/<int:id>/edit', methods=['GET', 'POST'])
+def edit_product(id):
+    product = Product.query.get_or_404(id)
+    if request.method == 'POST':
+        product.name = request.form['name']
+        product.description = request.form['description']
+        product.price = float(request.form['price'])
+        db.session.commit()
+        return redirect(url_for('index'))
+    return render_template('edit_product.html', product=product)
 
-@app.route('/favicon.ico')
-def favicon():
-    return send_from_directory(os.path.join(app.root_path, 'static'),
-                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
+@app.route('/product/<int:id>/delete', methods=['POST'])
+def delete_product(id):
+    product = Product.query.get_or_404(id)
+    db.session.delete(product)
+    db.session.commit()
+    return redirect(url_for('index'))
+    
+# @app.route('/add', methods=['POST'])
+# @csrf.exempt
+# def add_restaurant():
+#     try:
+#         name = request.values.get('products_name')
+#         price = request.values.get('price')
+
+#     except (KeyError):
+#         # Redisplay the question voting form.
+#         return render_template('add_restaurant.html', {
+#             'error_message': "You must include a restaurant name, address, and description",
+#         })
+#     else:
+#         product = Products()
+#         product.name = name
+#         product.price = price
+#         db.session.add(product)
+#         db.session.commit()
+
+#         return redirect(url_for('details', id=product.id))
+
+# @app.route('/favicon.ico')
+# def favicon():
+#     return send_from_directory(os.path.join(app.root_path, 'static'),
+#                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 if __name__ == '__main__':
     app.run()
