@@ -1,16 +1,37 @@
 {% extends "layout.html" %}
 {% block content %}
-<h1>Product Catalog</h1>
-<a href="{{ url_for('new_product') }}">Add New Product</a>
-<ul>
-{% for product in products %}
-    <li>
-        {{ product.name }} - ${{ product.price }}
-        <a href="{{ url_for('edit_product', id=product.id) }}">Edit</a>
-        <form action="{{ url_for('delete_product', id=product.id) }}" method="post" style="display: inline;">
-            <input type="submit" value="Delete" onclick="return confirm('Are you sure?');">
-        </form>
-    </li>
-{% endfor %}
-</ul>
+<p>Click the buttons below to manage your products.</p>
+
+<!-- Center the buttons using a container -->
+<div style="text-align: center;">
+    <!-- Add New Product Button -->
+    <form method="GET" action="{{ url_for('new_product') }}" style="display: inline;">
+        <button type="submit">Add New Product</button>
+    </form>
+
+    <!-- Add space between buttons -->
+    &nbsp;&nbsp;&nbsp;
+
+    <!-- Show Products Button -->
+    <form method="GET" action="{{ url_for('index') }}" style="display: inline;">
+        <input type="hidden" name="show_products" value="true">
+        <button type="submit">Show Products</button>
+    </form>
+
+
+<!-- Conditionally render the product list -->
+{% if show_products %}
+    <h3>List of Products:</h3>
+    <ul style="list-style-position: inside; padding: 0; margin: 0;">
+    {% for product in products %}
+        <li>{{ product.name }} - ${{ product.price }}
+            <a href="{{ url_for('edit_product', id=product.id) }}">Edit</a>
+            <form action="{{ url_for('delete_product', id=product.id) }}" method="post" style="display:inline;">
+                <button type="submit" onclick="return confirm('Are you sure?');">Delete</button>
+            </form>
+        </li>
+    {% endfor %}
+    </ul>
+{% endif %}
+</div>
 {% endblock %}
