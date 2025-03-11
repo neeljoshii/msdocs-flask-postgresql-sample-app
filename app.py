@@ -36,9 +36,10 @@ from models import Products
 
 @app.route('/', methods=['GET'])
 def index():
+    show_products = request.args.get('show_products', 'false') == 'true'
     print('Request for index page received')
-    products = Products.query.all()
-    return render_template('index.html', products=products)
+    products = Products.query.all() if show_products else []
+    return render_template('index.html', products=products, show_products=show_products)
 
 # @app.route('/<int:id>', methods=['GET'])
 # def details(id):
