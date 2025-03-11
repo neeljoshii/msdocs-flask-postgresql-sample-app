@@ -4,21 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Product Catalog{% endblock %}</title>
+<style>
+    p {
+        font-family: Georgia, serif;
+        text-align: center;
+        vertical-align: middle;
+        color: black;
+        font-size: 24px;
+    }
+    h1 {
+        font-family: Georgia, serif;
+        text-align: center;
+        vertical-align: middle;
+        color: black;
+        font-size: 36px;
+        font-weight: bold;
+    }
+</style>
 </head>
 <body>
     <header>
-        <h1>Product Catalog</h1>
-        <nav>
-            <a href="{{ url_for('index') }}">Home</a>
-            <a href="{{ url_for('new_product') }}">Add New Product</a>
-        </nav>
+        <h1>Welcome to the Product Catalog!</h1>
     </header>
     <main>
         {% block content %}
         {% endblock %}
     </main>
     <footer>
-        <p>&copy; 2025 Product Catalog</p>
+        <p>&copy; Neel Joshi</p>
+        <p>"Great products start with great ideas!"</p>
     </footer>
 </body>
 </html>
