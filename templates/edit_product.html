@@ -16,7 +16,7 @@
         <ul style="display: inline-block; text-align: left;">
         {% for product in products %}
             <li>{{ product.name }} - ${{ product.price }}
-                <a href="{{ url_for('edit_product', id=product.id) }}">Edit</a>
+                <!-- <a href="{{ url_for('edit_product', id=product.id) }}">Edit</a> -->
                 <form action="{{ url_for('delete_product', id=product.id) }}" method="post" style="display:inline;">
                     <button type="submit" onclick="return confirm('Are you sure?');">Delete</button>
                 </form>
