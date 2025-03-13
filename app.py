@@ -65,17 +65,17 @@ def new_product():
         return redirect(url_for('index'))
     return render_template('new_product.html')
 
-@app.route('/product/<int:id>/edit', methods=['GET', 'POST'])
-@csrf.exempt
-def edit_product(id):
-    product = Products.query.get_or_404(id)
-    if request.method == 'POST':
-        product.name = request.form['name']
-        product.description = request.form['description']
-        product.price = float(request.form['price'])
-        db.session.commit()
-        return redirect(url_for('index'))
-    return render_template('edit_product.html', product=product)
+# @app.route('/product/<int:id>/edit', methods=['GET', 'POST'])
+# @csrf.exempt
+# def edit_product(id):
+#     product = Products.query.get_or_404(id)
+#     if request.method == 'POST':
+#         product.name = request.form['name']
+#         product.description = request.form['description']
+#         product.price = float(request.form['price'])
+#         db.session.commit()
+#         return redirect(url_for('index'))
+#     return render_template('edit_product.html', product=product)
 
 @app.route('/product/<int:id>/delete', methods=['POST'])
 @csrf.exempt
